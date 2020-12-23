@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app='ShoppingListCheckOff'>
+  <head>
+    <meta charset="utf-8">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Custom Service</title>
+  </head>
+  <body>
+    <h1>Shopping List</h1>
+
+    <!-- Preconfigured List -->
+    <div id="list" ng-controller='ToBuyController as toBuyList'>
+      <h3>To Buy</h3>
+      <input type="text" ng-model="toBuyList.itemName" placeholder="item name">
+      <input type="text" ng-model="toBuyList.itemQuantity" placeholder="quantity">
+      <button ng-click="toBuyList.addItem();">Add Item</button>
+      <ol>
+        <li ng-repeat="item in toBuyList.items">
+          {{ item.quantity }} of {{ item.name }}
+          <button ng-click="toBuyList.removeItem($index);">Remove Item</button>
+        </li>
+      </ol>
+
+      <div ng-hide="!toBuyList.errorMessage" class="error">Error: {{toBuyList.errorMessage}}</div>
+    </div>
+
+    <div id="list2" ng-controller='AlreadyBoughtController as boughtList'>
+      <h3>Already Bought</h3>
+      {{boughtList.shoppingList}}
+      <ol>
+        <li ng-repeat="item in boughtList.items">
+          {{ item.quantity }} of {{ item.name }}
+          <!-- <button ng-click="boughtList.removeItem($index);">Remove Item</button> -->
+        </li>
+      </ol>
+
+      <!-- <div ng-hide="!toBuyList.errorMessage" class="error">Error: {{toBuyList.errorMessage}}</div> -->
+    </div>
+
+  </body>
+</html>
