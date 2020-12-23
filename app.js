@@ -15,11 +15,20 @@ function ToBuyController(ShoppingListCheckOffService) {
   toBuyList.itemName = "";
   toBuyList.itemQuantity = "";
 
-  toBuyList.errorMessage = "s";
+  toBuyList.errorMessage = "";
+
+  toBuyList.message = "Everything is bought!";
+
+
 
   toBuyList.addItem = function () {
     try {
-      ShoppingListCheckOffService.addItem(toBuyList.itemName, toBuyList.itemQuantity);
+      if(toBuyList.itemName !== "" && toBuyList.itemQuantity !== "") {
+        ShoppingListCheckOffService.addItem(toBuyList.itemName, toBuyList.itemQuantity);
+        toBuyList.errorMessage = "";
+      } else{
+        throw new Error("Name and Quantity should not be empty");
+      }
     } catch (error) {
       toBuyList.errorMessage = error.message;
     }
@@ -37,10 +46,14 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
   boughtList.items = ShoppingListCheckOffService.bought;
   console.log(boughtList.items);
 
-  boughtList.shoppingList = ShoppingListCheckOffService.shoppingList;
+  boughtList.errorMessage = "Nothing bought yet";
 
-  boughtList.removeItem = function (itemIndex) {
-    ShoppingListCheckOffService.removeItem(itemIndex);
+  boughtList.isEmpty = function() {
+    if(boughtList.items.length === 0) {
+      return true;
+    } else {
+      return false;
+    }
   };
 }
 

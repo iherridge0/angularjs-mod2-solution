@@ -9,34 +9,35 @@
   </head>
   <body>
     <h1>Shopping List</h1>
-
+<!-- REMEMBER TO COMPLETE MODULE 4 as well - Probably will do both in parallel afterwitch I have completed both courses in audit mode first. - Marshmallow test -->
+<!-- Make sure all of your Javascript code is inside of an IIFE. (If you don't know what that is or why we'd want to use it, brush up on it by looking through module 4 of HTML, CSS, and Javascript for Web Developers course I teach.) -->
     <!-- Preconfigured List -->
     <div id="list" ng-controller='ToBuyController as toBuyList'>
       <h3>To Buy</h3>
+      <div ng-hide="!toBuyList.errorMessage" class="error">{{toBuyList.errorMessage}}</div>
       <input type="text" ng-model="toBuyList.itemName" placeholder="item name">
       <input type="text" ng-model="toBuyList.itemQuantity" placeholder="quantity">
       <button ng-click="toBuyList.addItem();">Add Item</button>
       <ol>
         <li ng-repeat="item in toBuyList.items">
+          <button ng-click="toBuyList.removeItem($index);">Bought</button>
           {{ item.quantity }} of {{ item.name }}
-          <button ng-click="toBuyList.removeItem($index);">Remove Item</button>
         </li>
       </ol>
+      <div ng-if="toBuyList.items.length === 0" class="empty">{{toBuyList.message}}</div>
 
-      <div ng-hide="!toBuyList.errorMessage" class="error">Error: {{toBuyList.errorMessage}}</div>
     </div>
 
     <div id="list2" ng-controller='AlreadyBoughtController as boughtList'>
       <h3>Already Bought</h3>
-      {{boughtList.shoppingList}}
-      <ol>
+      <ul>
         <li ng-repeat="item in boughtList.items">
-          {{ item.quantity }} of {{ item.name }}
+           Bought {{ item.quantity }} {{ item.name }}
           <!-- <button ng-click="boughtList.removeItem($index);">Remove Item</button> -->
         </li>
-      </ol>
-
-      <!-- <div ng-hide="!toBuyList.errorMessage" class="error">Error: {{toBuyList.errorMessage}}</div> -->
+      </ul>
+      <div ng-if="boughtList.items.length === 0" class="error">{{boughtList.errorMessage}}</div>
+      <!-- <div ng-hide="!boughtList.errorMessage && !boughtList.isEmpty();" class="error">{{boughtList.errorMessage}}</div> -->
     </div>
 
   </body>
